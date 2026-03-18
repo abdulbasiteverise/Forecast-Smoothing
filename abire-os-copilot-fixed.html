@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workforce Management Tool | WFM Forecasting, Erlang Calculator &amp; Intraday Analysis</title>
+  <meta name="description" content="Free AI-powered Workforce Management tool for forecasting, Erlang C staffing, capacity planning, and intraday analysis. Optimize your call center performance." />
+  <meta name="keywords" content="workforce management tools, WFM forecasting tool, Erlang C calculator, call center staffing calculator, intraday management WFM, forecast vs actual analysis, call center capacity planning, shrinkage calculator WFM, real-time WFM dashboard, contact center analytics tools" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="ABIRE OS – AI Workforce Management Tool" />
+  <meta property="og:description" content="Real-time WFM forecasting, Erlang C staffing, capacity planning, and intraday analysis for call centers." />
+  <meta property="og:type" content="website" />
+
+  <!-- [FIXED] Google Fonts loaded via CDN — no local file dependency -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- [FIXED] All CSS inlined — no external styles.css dependency -->
+  <style>
+/* ============================================================
+   ABIRE OS – WFM Forecast Guardian  |  Fully Standalone CSS
+   ============================================================ */
+:root {
+  --bg:#0B0B0F; --bg2:#0F0F15; --bg3:#13131A;
+  --panel:rgba(255,255,255,0.035);
+  --panel-border:rgba(255,255,255,0.07);
+  --panel-hover:rgba(255,255,255,0.055);
+  --purple:#7C3AED; --purple-l:#9D5AF5;
+  --blue:#2563EB; --blue-l:#3B82F6;
+  --cyan:#06B6D4; --green:#10B981;
+  --yellow:#F59E0B; --red:#EF4444;
+  --grad-main:linear-gradient(135deg,#7C3AED,#2563EB);
+  --grad-text:linear-gradient(135deg,#A78BFA,#60A5FA,#22D3EE);
+  --text:#F1F1F5; --text-muted:#8B8B9A; --text-dim:#4A4A5A;
+  --font-display:'Syne',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --font-body:'Inter',sans-serif;
+  --radius:12px; --radius-lg:20px; --radius-xl:28px;
+  --shadow-card:0 4px 32px rgba(0,0,0,0.5);
+  --shadow-glow-purple:0 0 40px rgba(124,58,237,0.25);
+  --transition:0.2s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img{max-width:100%}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,textarea{font-family:inherit}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.hidden{display:none!important}
+.mt{margin-top:24px}
+.mt-panel{margin-top:32px}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:3px}
+
+/* LIVE BAR */
+.live-bar{position:sticky;top:0;z-index:1000;background:rgba(11,11,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,58,237,0.3);padding:6px 0}
+.live-bar-inner{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:pulse-dot 2s infinite;flex-shrink:0}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 6px var(--green)}50%{box-shadow:0 0 16px var(--green),0 0 32px rgba(16,185,129,0.4)}}
+.live-info{color:var(--text)}
+.mono{font-family:var(--font-mono)}
+.sep{color:var(--text-dim)}
+.status-badge{margin-left:auto;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:var(--green);padding:2px 10px;border-radius:20px;font-size:10px;letter-spacing:0.1em;font-weight:700}
+
+/* NAV */
+.main-nav{position:sticky;top:29px;z-index:999;background:rgba(11,11,15,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--panel-border)}
+.nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.logo-icon{font-size:22px;background:var(--grad-main);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo-text{font-family:var(--font-display);font-weight:800;font-size:18px;letter-spacing:0.05em}
+.logo-os{background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:4px;align-items:center;margin-left:auto}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text-muted);transition:var(--transition);white-space:nowrap}
+.nav-link:hover,.nav-link.active{color:var(--text);background:var(--panel)}
+.nav-link.active{color:var(--purple-l)}
+.nav-toggle{display:none;color:var(--text);font-size:20px;margin-left:auto}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:9999;background:rgba(11,11,15,0.98);backdrop-filter:blur(20px);padding:80px 32px 32px;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-close{position:absolute;top:20px;right:24px;color:var(--text);font-size:24px}
+.mobile-link{display:block;padding:16px 0;font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--text-muted);border-bottom:1px solid var(--panel-border);transition:var(--transition)}
+.mobile-link:hover{color:var(--purple-l)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding:100px 24px 80px;text-align:center;min-height:600px;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.35}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,#7C3AED,transparent 70%);top:-200px;left:-100px;animation:orb-drift1 20s ease-in-out infinite alternate}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,#2563EB,transparent 70%);top:-100px;right:-100px;animation:orb-drift2 25s ease-in-out infinite alternate}
+.orb3{width:400px;height:400px;background:radial-gradient(circle,#06B6D4,transparent 70%);bottom:-150px;left:40%;animation:orb-drift3 18s ease-in-out infinite alternate;opacity:0.2}
+@keyframes orb-drift1{from{transform:translate(0,0) scale(1)}to{transform:translate(80px,40px) scale(1.1)}}
+@keyframes orb-drift2{from{transform:translate(0,0) scale(1)}to{transform:translate(-60px,60px) scale(0.95)}}
+@keyframes orb-drift3{from{transform:translate(0,0)}to{transform:translate(-40px,-30px)}}
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:1;max-width:820px}
+.hero-badge{display:inline-block;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.4);color:var(--purple-l);font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;padding:5px 16px;border-radius:20px;margin-bottom:24px;font-weight:600}
+.hero-h1{font-family:var(--font-display);font-size:clamp(28px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;color:var(--text)}
+.gradient-text{background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--text-muted);max-width:600px;margin:0 auto 36px;line-height:1.7}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.hero-stats{display:flex;align-items:center;justify-content:center;gap:24px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-n{display:block;font-family:var(--font-display);font-size:22px;font-weight:800;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:11px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase}
+.stat-div{width:1px;height:36px;background:var(--panel-border)}
+
+/* BUTTONS */
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--grad-main);color:#fff;font-family:var(--font-display);font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;transition:var(--transition);letter-spacing:0.02em;box-shadow:0 4px 20px rgba(124,58,237,0.4)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(124,58,237,0.6);filter:brightness(1.1)}
+.btn-primary:active{transform:translateY(0)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue-l);border:1px solid rgba(59,130,246,0.5);font-family:var(--font-display);font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;transition:var(--transition)}
+.btn-secondary:hover{background:rgba(59,130,246,0.1);border-color:var(--blue-l);transform:translateY(-1px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text-muted);border:1px solid var(--panel-border);font-family:var(--font-display);font-weight:600;font-size:14px;padding:12px 24px;border-radius:10px;transition:var(--transition)}
+.btn-ghost:hover{background:var(--panel);color:var(--text);border-color:rgba(255,255,255,0.15)}
+.btn-full{width:100%;justify-content:center}
+.btn-icon{font-size:15px}
+
+/* LAYOUT */
+.container{max-width:1400px;margin:0 auto;padding:0 24px}
+.tool-section{padding:64px 0}
+.bg-alt{background:var(--bg2)}
+
+/* PANELS */
+.panel{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius-lg);overflow:hidden;transition:border-color var(--transition)}
+.panel:hover{border-color:rgba(255,255,255,0.12)}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--panel-border);background:rgba(255,255,255,0.02)}
+.panel-title{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;letter-spacing:0.03em}
+.panel-icon{font-size:15px}
+.panel-badge{font-family:var(--font-mono);font-size:10px;background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);color:var(--purple-l);padding:3px 10px;border-radius:20px;letter-spacing:0.08em}
+.panel-body{padding:20px}
+
+/* TOOL GRID */
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+/* INPUT */
+.field-label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+.field-hint{font-size:11px;color:var(--text-dim);font-weight:400;text-transform:none;letter-spacing:0}
+.data-textarea{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--panel-border);border-radius:8px;color:var(--text);font-family:var(--font-mono);font-size:12px;line-height:1.6;padding:12px;resize:vertical;transition:border-color var(--transition)}
+.data-textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,0.15)}
+.data-textarea::placeholder{color:var(--text-dim)}
+
+/* PARAMS */
+.params-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.param-group{display:flex;flex-direction:column;gap:6px}
+.param-label{font-size:11px;font-weight:600;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase}
+.param-input{background:rgba(0,0,0,0.3);border:1px solid var(--panel-border);border-radius:8px;color:var(--text);font-family:var(--font-mono);font-size:14px;font-weight:600;padding:9px 12px;width:100%;transition:border-color var(--transition)}
+.param-input:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,0.15)}
+
+/* OUTPUT */
+.output-panel{display:flex;flex-direction:column}
+.output-actions{display:flex;gap:8px}
+.icon-btn{width:32px;height:32px;background:var(--panel);border:1px solid var(--panel-border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:var(--transition);color:var(--text-muted)}
+.icon-btn:hover{background:var(--panel-hover);border-color:rgba(255,255,255,0.15);color:var(--text)}
+.output-placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;text-align:center;color:var(--text-dim);gap:10px}
+.placeholder-icon{font-size:40px;opacity:0.3}
+.placeholder-sub{font-size:12px;color:var(--text-dim);max-width:260px}
+.output-content{padding:16px;display:flex;flex-direction:column;gap:12px}
+
+/* STATUS */
+.status-block{display:flex;align-items:center;gap:16px;padding:16px 20px}
+.status-indicator{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.status-indicator.green{background:rgba(16,185,129,0.15);box-shadow:0 0 20px rgba(16,185,129,0.4)}
+.status-indicator.yellow{background:rgba(245,158,11,0.15);box-shadow:0 0 20px rgba(245,158,11,0.4)}
+.status-indicator.red{background:rgba(239,68,68,0.15);box-shadow:0 0 20px rgba(239,68,68,0.4)}
+.status-label{font-family:var(--font-display);font-size:16px;font-weight:800;letter-spacing:0.05em}
+.status-label.green{color:var(--green)}
+.status-label.yellow{color:var(--yellow)}
+.status-label.red{color:var(--red)}
+.status-sub{font-size:12px;color:var(--text-muted);margin-top:2px}
+.confidence-badge{margin-left:auto;font-family:var(--font-mono);font-size:22px;font-weight:700;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex-shrink:0}
+
+/* METRICS */
+.metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric-card{background:rgba(0,0,0,0.2);border:1px solid var(--panel-border);border-radius:10px;padding:12px;text-align:center}
+.metric-val{font-family:var(--font-mono);font-size:20px;font-weight:700;line-height:1;margin-bottom:4px}
+.metric-val.green{color:var(--green)}
+.metric-val.yellow{color:var(--yellow)}
+.metric-val.red{color:var(--red)}
+.metric-val.blue{color:var(--cyan)}
+.metric-lbl{font-size:10px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase}
+
+/* RESULT BLOCKS */
+.result-block{background:rgba(0,0,0,0.15);border:1px solid var(--panel-border);border-radius:10px;padding:16px}
+.rb-title{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px}
+.causes-list,.actions-list{display:flex;flex-direction:column;gap:8px}
+.cause-item,.action-item{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}
+.cause-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.cause-dot.high{background:var(--red);box-shadow:0 0 6px var(--red)}
+.cause-dot.medium{background:var(--yellow);box-shadow:0 0 6px var(--yellow)}
+.cause-dot.low{background:var(--green);box-shadow:0 0 6px var(--green)}
+.action-num{background:rgba(124,58,237,0.2);border:1px solid rgba(124,58,237,0.3);color:var(--purple-l);font-family:var(--font-mono);font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ai-summary-block{border-color:rgba(124,58,237,0.3);background:rgba(124,58,237,0.05)}
+.ai-summary-content{font-size:13px;line-height:1.8;color:var(--text-muted)}
+.ai-summary-content strong{color:var(--text)}
+.email-block{border-color:rgba(59,130,246,0.3)}
+.email-btns{display:flex;gap:10px}
+.email-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:8px;font-family:var(--font-display);font-weight:700;font-size:13px;transition:var(--transition)}
+.email-btn.gmail{background:rgba(234,67,53,0.1);border:1px solid rgba(234,67,53,0.3);color:#EA4335}
+.email-btn.gmail:hover{background:rgba(234,67,53,0.2)}
+.email-btn.outlook{background:rgba(0,120,212,0.1);border:1px solid rgba(0,120,212,0.3);color:#0078D4}
+.email-btn.outlook:hover{background:rgba(0,120,212,0.2)}
+
+/* CHART */
+.chart-container{padding:20px;height:300px;position:relative}
+#wfmChart{width:100%!important;height:100%!important}
+
+/* SECTION HEADERS */
+.section-header{text-align:center;max-width:700px;margin:0 auto 48px}
+.section-tag{display:inline-block;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple-l);background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.section-h2{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-0.02em;margin-bottom:12px}
+.section-desc{color:var(--text-muted);font-size:15px;line-height:1.7}
+
+/* ERLANG / CAPACITY / SHRINKAGE GRIDS */
+.erlang-grid,.capacity-grid,.shrinkage-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.erlang-result-panel,.capacity-result-panel,.shrinkage-result-panel{min-height:300px}
+.erlang-placeholder{height:100%;min-height:260px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:13px}
+.erlang-results{padding:24px;display:flex;flex-direction:column;gap:16px}
+.erl-big{text-align:center;padding:24px;background:rgba(0,0,0,0.2);border-radius:12px}
+.erl-big-num{font-family:var(--font-display);font-size:64px;font-weight:800;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.erl-big-lbl{color:var(--text-muted);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;margin-top:6px}
+.erl-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.erl-metric{background:rgba(0,0,0,0.2);border:1px solid var(--panel-border);border-radius:8px;padding:12px;text-align:center}
+.erl-metric-val{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--cyan)}
+.erl-metric-lbl{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+.cap-table{width:100%;border-collapse:collapse;font-size:12px}
+.cap-table th{font-family:var(--font-mono);font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;padding:8px 10px;border-bottom:1px solid var(--panel-border);text-align:right}
+.cap-table th:first-child{text-align:left}
+.cap-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:right;font-family:var(--font-mono)}
+.cap-table td:first-child{text-align:left;color:var(--text-muted)}
+.cap-table tr:last-child td{border-bottom:none}
+.cap-table tr:hover td{background:rgba(255,255,255,0.03)}
+
+/* CONTENT / SEO */
+.content-section{padding:80px 0}
+.content-container{display:flex;flex-direction:column;gap:48px}
+.content-article{max-width:820px}
+.content-h2{font-family:var(--font-display);font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-0.01em;margin-bottom:16px;color:var(--text);position:relative;padding-left:20px}
+.content-h2::before{content:'';position:absolute;left:0;top:4px;bottom:4px;width:3px;background:var(--grad-main);border-radius:2px}
+.content-article p{color:var(--text-muted);line-height:1.8;margin-bottom:14px;font-size:15px}
+.content-article p strong{color:var(--text)}
+.benefit-list{display:flex;flex-direction:column;gap:12px;padding-left:0}
+.benefit-list li{color:var(--text-muted);font-size:14px;line-height:1.7;padding-left:20px;position:relative}
+.benefit-list li::before{content:'▸';position:absolute;left:0;color:var(--purple-l)}
+.benefit-list li strong{color:var(--text)}
+
+/* FAQ */
+.faq-section{padding:80px 0;background:var(--bg2)}
+.faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--panel);border:1px solid var(--panel-border);border-radius:var(--radius);overflow:hidden;transition:border-color var(--transition)}
+.faq-item:hover{border-color:rgba(124,58,237,0.3)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;text-align:left;font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--text);transition:color var(--transition)}
+.faq-q:hover{color:var(--purple-l)}
+.faq-arrow{font-size:18px;color:var(--text-muted);flex-shrink:0;transition:transform var(--transition)}
+.faq-q[aria-expanded="true"] .faq-arrow{transform:rotate(180deg);color:var(--purple-l)}
+.faq-a{padding:0 20px 18px}
+.faq-a p{color:var(--text-muted);font-size:13px;line-height:1.8}
+.faq-a p strong{color:var(--text)}
+
+/* SCHEDULER */
+.scheduler-body{display:grid;grid-template-columns:1fr 1fr auto;gap:16px;align-items:end}
+.scheduler-btns{display:flex;gap:10px;align-items:center}
+.scheduler-status{padding:12px 20px;font-size:13px;color:var(--green);font-family:var(--font-mono)}
+.scheduled-list{padding:0 20px 16px;display:flex;flex-direction:column;gap:6px}
+.scheduled-item{background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.15);border-radius:8px;padding:8px 14px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center}
+.scheduled-remove{color:var(--red);font-size:12px;opacity:0.6;transition:opacity var(--transition)}
+.scheduled-remove:hover{opacity:1}
+
+/* FOOTER */
+.site-footer{background:var(--bg2);border-top:1px solid var(--panel-border);padding:60px 0 0}
+.footer-inner{display:grid;grid-template-columns:1fr auto;gap:60px;padding-bottom:40px;border-bottom:1px solid var(--panel-border)}
+.footer-brand{display:flex;flex-direction:column;gap:8px}
+.footer-tagline{font-size:12px;color:var(--text-dim)}
+.footer-nav{display:flex;gap:60px}
+.footer-col{display:flex;flex-direction:column;gap:12px}
+.footer-col-title{font-family:var(--font-display);font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)}
+.footer-link{font-size:13px;color:var(--text-dim);transition:color var(--transition)}
+.footer-link:hover{color:var(--purple-l)}
+.footer-bottom{padding:20px 24px;text-align:center;font-size:12px;color:var(--text-dim);max-width:1400px;margin:0 auto}
+
+/* COPILOT */
+.copilot-fab{position:fixed;bottom:28px;right:28px;z-index:1050;width:56px;height:56px;background:var(--grad-main);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,0.5);transition:var(--transition);outline:none}
+.copilot-fab:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(124,58,237,0.7)}
+.copilot-icon{font-size:22px}
+.copilot-pulse{position:absolute;width:56px;height:56px;border-radius:50%;border:2px solid rgba(124,58,237,0.5);animation:fab-pulse 3s ease-out infinite;pointer-events:none}
+@keyframes fab-pulse{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.8);opacity:0}}
+.copilot-panel{position:fixed;bottom:96px;right:28px;z-index:1100;width:360px;max-height:520px;background:var(--bg3);border:1px solid rgba(124,58,237,0.35);border-radius:var(--radius-xl);box-shadow:var(--shadow-glow-purple),var(--shadow-card);display:flex;flex-direction:column;overflow:hidden;opacity:0;pointer-events:none;transform:translateY(20px) scale(0.97);transition:opacity 0.25s cubic-bezier(0.4,0,0.2,1),transform 0.25s cubic-bezier(0.4,0,0.2,1);visibility:hidden}
+.copilot-panel.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);visibility:visible}
+/* panel-in keyframes removed — using CSS transition on .copilot-panel.open */
+.copilot-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--panel-border);background:rgba(124,58,237,0.08)}
+.copilot-title{font-family:var(--font-display);font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
+.copilot-close{color:var(--text-muted);font-size:16px;transition:color var(--transition)}
+.copilot-close:hover{color:var(--text)}
+.copilot-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.copilot-msg{display:flex;flex-direction:column}
+.copilot-msg.bot{align-items:flex-start}
+.copilot-msg.user{align-items:flex-end}
+.msg-bubble{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6}
+.copilot-msg.bot .msg-bubble{background:rgba(255,255,255,0.06);color:var(--text);border-bottom-left-radius:4px}
+.copilot-msg.user .msg-bubble{background:var(--grad-main);color:#fff;border-bottom-right-radius:4px}
+.copilot-suggestions{padding:8px 12px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--panel-border)}
+.suggestion-chip{background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:var(--purple-l);font-size:11px;padding:4px 10px;border-radius:20px;transition:var(--transition);font-family:var(--font-body)}
+.suggestion-chip:hover{background:rgba(124,58,237,0.22)}
+.copilot-input-row{display:flex;gap:8px;padding:12px;border-top:1px solid var(--panel-border)}
+.copilot-input{flex:1;background:rgba(0,0,0,0.3);border:1px solid var(--panel-border);border-radius:8px;color:var(--text);font-size:13px;padding:8px 12px}
+.copilot-input:focus{outline:none;border-color:var(--purple)}
+.copilot-send{width:36px;height:36px;background:var(--grad-main);border-radius:8px;color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition)}
+.copilot-send:hover{filter:brightness(1.15)}
+.typing-indicator{display:flex;gap:4px;padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:12px;border-bottom-left-radius:4px;width:fit-content}
+.typing-dot{width:5px;height:5px;background:var(--text-muted);border-radius:50%;animation:typing 1.4s infinite ease-in-out}
+.typing-dot:nth-child(2){animation-delay:0.2s}
+.typing-dot:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,80%,100%{transform:scale(0.6);opacity:0.4}40%{transform:scale(1);opacity:1}}
+
+/* SHRINKAGE RESULTS */
+.shrinkage-results{padding:24px;display:flex;flex-direction:column;gap:16px}
+.shr-gauge-wrap{text-align:center;padding:20px}
+.shr-gauge{width:140px;height:70px;border-radius:140px 140px 0 0;border:10px solid;border-bottom:none;margin:0 auto 12px;position:relative;box-sizing:border-box}
+.shr-pct{font-family:var(--font-display);font-size:40px;font-weight:800;background:var(--grad-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.shr-lbl{font-size:12px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase}
+.shr-breakdown{display:flex;flex-direction:column;gap:6px}
+.shr-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.shr-row-lbl{color:var(--text-muted)}
+.shr-row-val{font-family:var(--font-mono);font-weight:600;color:var(--text)}
+.shr-multiplier{background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.25);border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.shr-mult-lbl{font-size:12px;color:var(--text-muted)}
+.shr-mult-val{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--purple-l)}
+
+/* ANIMATIONS */
+@keyframes fade-in-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fade-in-up 0.4s ease-out forwards}
+.result-block{animation:fade-in-up 0.3s ease-out both}
+.result-block:nth-child(2){animation-delay:0.05s}
+.result-block:nth-child(3){animation-delay:0.1s}
+.result-block:nth-child(4){animation-delay:0.15s}
+.result-block:nth-child(5){animation-delay:0.2s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .tool-grid,.erlang-grid,.capacity-grid,.shrinkage-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  .hero{padding:60px 20px 50px}
+  .hero-h1{font-size:28px}
+  .hero-cta{flex-direction:column;align-items:center}
+  .tool-section{padding:40px 0}
+  .params-grid{grid-template-columns:1fr}
+  .metrics-row{grid-template-columns:1fr 1fr}
+  .scheduler-body{grid-template-columns:1fr}
+  .footer-nav{flex-direction:column;gap:30px}
+  .copilot-panel{width:calc(100vw - 40px);right:20px}
+  .copilot-panel.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);visibility:visible}
+  .copilot-panel.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);visibility:visible}
+  .live-bar-inner{gap:6px}
+}
+@media(max-width:480px){
+  .container{padding:0 16px}
+  .metrics-row,.erl-metrics{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column;gap:16px}
+  .stat-div{width:60px;height:1px}
+}
+  </style>
+
+  <!-- JSON-LD FAQ Schema for Rich Snippets -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is Erlang C in workforce management?","acceptedAnswer":{"@type":"Answer","text":"Erlang C is a mathematical formula used in workforce management to calculate the probability that a call will need to wait before being answered. It determines the minimum number of agents needed to achieve a target service level, accounting for call volume, average handle time, and desired answer speed."}},{"@type":"Question","name":"How do you calculate call center staffing?","acceptedAnswer":{"@type":"Answer","text":"Call center staffing is calculated using historical call volume forecasts, average handle time (AHT), target service level, shrinkage percentage, and the Erlang C formula. The formula determines the base agent count needed, which is then adjusted for shrinkage to get the total required headcount."}},{"@type":"Question","name":"What is forecast vs actual analysis in WFM?","acceptedAnswer":{"@type":"Answer","text":"Forecast vs actual analysis compares predicted call volumes against real intraday data to identify variance, helping WFM teams detect arrival pattern drift and SLA risks early enough to take corrective action."}},{"@type":"Question","name":"What is shrinkage in WFM?","acceptedAnswer":{"@type":"Answer","text":"Shrinkage in workforce management refers to the percentage of scheduled time that agents are unavailable for customer interactions, including planned (breaks, meals, training) and unplanned (absenteeism, late arrivals) components. Typical call center shrinkage ranges from 25% to 35%."}},{"@type":"Question","name":"How to manage intraday performance in a call center?","acceptedAnswer":{"@type":"Answer","text":"Intraday management involves continuously monitoring real-time metrics against forecasts and adjusting staffing dynamically using variance tracking, early warning thresholds, queue-based agent reallocation, overtime triggers, and escalation workflows."}}]}
+  </script>
+</head>
+<body>
+
+<!-- LIVE HEADER BAR -->
+<div class="live-bar" role="banner" aria-label="Live system status">
+  <div class="live-bar-inner">
+    <span class="live-dot" aria-hidden="true"></span>
+    <span id="liveDate" class="live-info"></span>
+    <span class="sep">|</span>
+    <span id="liveTime" class="live-info mono"></span>
+    <span class="sep">|</span>
+    <span id="liveInterval" class="live-info mono"></span>
+    <span class="sep">|</span>
+    <span class="status-badge">● RUNNING</span>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="logo" aria-label="ABIRE OS Home">
+      <span class="logo-icon" aria-hidden="true">⬡</span>
+      <span class="logo-text">ABIRE <span class="logo-os">OS</span></span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#tool" class="nav-link active">Forecast Guardian</a></li>
+      <li><a href="#erlang" class="nav-link">Erlang C Calculator</a></li>
+      <li><a href="#capacity" class="nav-link">Capacity Planner</a></li>
+      <li><a href="#shrinkage" class="nav-link">Shrinkage Tool</a></li>
+      <li><a href="#schedule" class="nav-link">Schedule Optimizer</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggleBtn" aria-label="Toggle mobile menu" aria-expanded="false">☰</button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Mobile navigation">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <ul role="list">
+    <li><a href="#tool" class="mobile-link">Forecast Guardian</a></li>
+    <li><a href="#erlang" class="mobile-link">Erlang C Calculator</a></li>
+    <li><a href="#capacity" class="mobile-link">Capacity Planner</a></li>
+    <li><a href="#shrinkage" class="mobile-link">Shrinkage Tool</a></li>
+    <li><a href="#schedule" class="mobile-link">Schedule Optimizer</a></li>
+  </ul>
+</div>
+
+<main>
+<!-- ========== HERO ========== -->
+<section class="hero" id="tool" aria-labelledby="heroHeading">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+    <div class="grid-lines"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">AI Edition · v3.1</div>
+    <h1 id="heroHeading" class="hero-h1">
+      AI Workforce Management Tool for<br />
+      <span class="gradient-text">Real-Time Forecasting &amp; Intraday Control</span>
+    </h1>
+    <p class="hero-sub">Analyze forecast vs actual, detect risks early, and take instant action with AI-powered WFM insights. The only <strong>call center staffing calculator</strong> with live intraday intelligence.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" id="runAnalysisBtn"><span class="btn-icon">⚡</span> Run Analysis</button>
+      <button class="btn-secondary" id="loadSampleBtn"><span class="btn-icon">📊</span> Load Sample Data</button>
+      <button class="btn-ghost" id="loadRandomBtn"><span class="btn-icon">🎲</span> Random Dataset</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n">98.4%</span><span class="stat-l">Forecast Accuracy</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span class="stat-n">&lt;30s</span><span class="stat-l">Alert Latency</span></div>
+      <div class="stat-div"></div>
+      <div class="stat"><span class="stat-n">5-Week</span><span class="stat-l">Rolling Window</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAIN TOOL ========== -->
+<section class="tool-section" aria-label="WFM Analysis Tool">
+  <div class="container">
+    <div class="tool-grid">
+
+      <!-- INPUT PANEL -->
+      <div class="panel input-panel" aria-labelledby="inputHeading">
+        <div class="panel-header">
+          <h2 id="inputHeading" class="panel-title"><span class="panel-icon">📥</span> Data Input</h2>
+          <span class="panel-badge">CSV Format</span>
+        </div>
+        <div class="panel-body">
+          <label for="dataInput" class="field-label">
+            Paste Interval Data
+            <span class="field-hint">Date · Day · Forecast · Actual (one per line)</span>
+          </label>
+          <textarea id="dataInput" class="data-textarea" placeholder="2025-01-06,Monday,1200,1180&#10;2025-01-06,Monday,1350,1420&#10;2025-01-06,Monday,1500,1380" rows="10" spellcheck="false"></textarea>
+        </div>
+        <div class="panel-header mt">
+          <h2 class="panel-title"><span class="panel-icon">⚙️</span> Parameters</h2>
+        </div>
+        <div class="panel-body params-grid">
+          <div class="param-group"><label class="param-label" for="ahtInput">Avg Handle Time (s)</label><input type="number" id="ahtInput" class="param-input" value="240" min="30" max="1800" /></div>
+          <div class="param-group"><label class="param-label" for="slaTarget">SLA Target (%)</label><input type="number" id="slaTarget" class="param-input" value="80" min="1" max="100" /></div>
+          <div class="param-group"><label class="param-label" for="peakThreshold">Peak Threshold (%)</label><input type="number" id="peakThreshold" class="param-input" value="15" min="1" max="50" /></div>
+          <div class="param-group"><label class="param-label" for="bufferPct">Buffer (%)</label><input type="number" id="bufferPct" class="param-input" value="10" min="0" max="50" /></div>
+          <div class="param-group"><label class="param-label" for="shrinkagePct">Shrinkage (%)</label><input type="number" id="shrinkagePct" class="param-input" value="28" min="0" max="60" /></div>
+          <div class="param-group"><label class="param-label" for="earlyWindow">Early Window (intervals)</label><input type="number" id="earlyWindow" class="param-input" value="3" min="1" max="10" /></div>
+        </div>
+        <div class="panel-body">
+          <button class="btn-primary btn-full" id="analyzeBtn"><span class="btn-icon">🚀</span> Analyze Now</button>
+        </div>
+      </div>
+
+      <!-- OUTPUT PANEL -->
+      <div class="panel output-panel" id="outputPanel" aria-labelledby="outputHeading">
+        <div class="panel-header">
+          <h2 id="outputHeading" class="panel-title"><span class="panel-icon">📡</span> Analysis Output</h2>
+          <div class="output-actions">
+            <button class="icon-btn" id="copyBtn" title="Copy Summary" aria-label="Copy summary">📋</button>
+            <button class="icon-btn" id="exportBtn" title="Export Text" aria-label="Export text">💾</button>
+          </div>
+        </div>
+        <div id="outputPlaceholder" class="output-placeholder">
+          <div class="placeholder-icon" aria-hidden="true">⬡</div>
+          <p>Load data &amp; run analysis to see AI insights</p>
+          <p class="placeholder-sub">Supports Erlang C staffing, variance detection, and intraday risk scoring</p>
+        </div>
+        <div id="outputContent" class="output-content hidden" aria-live="polite">
+          <div class="result-block status-block" id="statusBlock">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <div class="status-text">
+              <div class="status-label" id="statusLabel">—</div>
+              <div class="status-sub" id="statusSub">—</div>
+            </div>
+            <div class="confidence-badge" id="confidenceBadge">—</div>
+          </div>
+          <div class="metrics-row" id="metricsRow"></div>
+          <div class="result-block" id="rootCausesBlock">
+            <h3 class="rb-title">🔍 Root Causes Detected</h3>
+            <ul class="causes-list" id="causesList"></ul>
+          </div>
+          <div class="result-block" id="actionsBlock">
+            <h3 class="rb-title">⚡ Recommended Actions</h3>
+            <ul class="actions-list" id="actionsList"></ul>
+          </div>
+          <div class="result-block ai-summary-block" id="aiSummaryBlock">
+            <h3 class="rb-title">🤖 WFM AI Summary</h3>
+            <div class="ai-summary-content" id="aiSummaryContent"></div>
+          </div>
+          <div class="result-block email-block">
+            <h3 class="rb-title">📧 Escalate via Email</h3>
+            <div class="email-btns">
+              <button class="email-btn gmail" id="gmailBtn"><span>✉</span> Gmail</button>
+              <button class="email-btn outlook" id="outlookBtn"><span>📨</span> Outlook</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHART -->
+    <div class="panel mt-panel" id="chartSection" aria-label="Forecast vs Actual Chart">
+      <div class="panel-header">
+        <h2 class="panel-title"><span class="panel-icon">📈</span> Forecast vs Actual — Intraday View</h2>
+        <span class="panel-badge" id="chartIntervalBadge">—</span>
+      </div>
+      <div class="chart-container" role="img" aria-label="Bar chart comparing forecast vs actual call volumes">
+        <canvas id="wfmChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ERLANG C ========== -->
+<section class="tool-section bg-alt" id="erlang" aria-labelledby="erlangHeading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">WFM Staffing Tool</div>
+      <h2 id="erlangHeading" class="section-h2">Erlang C Calculator</h2>
+      <p class="section-desc">The industry-standard <strong>Erlang C staffing calculator</strong> used by call center planners worldwide. Enter your traffic parameters and get required agent headcount with service level projections.</p>
+    </div>
+    <div class="erlang-grid">
+      <div class="panel">
+        <div class="panel-body params-grid">
+          <div class="param-group"><label class="param-label" for="erlCallVol">Calls per Hour</label><input type="number" id="erlCallVol" class="param-input" value="200" min="1" /></div>
+          <div class="param-group"><label class="param-label" for="erlAHT">Avg Handle Time (s)</label><input type="number" id="erlAHT" class="param-input" value="240" min="1" /></div>
+          <div class="param-group"><label class="param-label" for="erlSLA">Service Level (%)</label><input type="number" id="erlSLA" class="param-input" value="80" min="1" max="100" /></div>
+          <div class="param-group"><label class="param-label" for="erlASA">Target ASA (s)</label><input type="number" id="erlASA" class="param-input" value="20" min="1" /></div>
+          <div class="param-group"><label class="param-label" for="erlShrink">Shrinkage (%)</label><input type="number" id="erlShrink" class="param-input" value="28" min="0" max="60" /></div>
+        </div>
+        <div class="panel-body">
+          <button class="btn-primary btn-full" id="erlangCalcBtn">Calculate Erlang C Staffing</button>
+        </div>
+      </div>
+      <div class="panel erlang-result-panel" id="erlangResult" aria-live="polite">
+        <div class="erlang-placeholder">Run calculation to see results</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CAPACITY PLANNER ========== -->
+<section class="tool-section" id="capacity" aria-labelledby="capacityHeading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">WFM Capacity Planning Tool</div>
+      <h2 id="capacityHeading" class="section-h2">Call Center Capacity Planner</h2>
+      <p class="section-desc">Plan long-range headcount requirements with our <strong>WFM capacity planning tool</strong>. Model growth scenarios, seasonal peaks, and hiring lead times.</p>
+    </div>
+    <div class="capacity-grid">
+      <div class="panel">
+        <div class="panel-body params-grid">
+          <div class="param-group"><label class="param-label" for="capCurrentVol">Current Monthly Volume</label><input type="number" id="capCurrentVol" class="param-input" value="150000" /></div>
+          <div class="param-group"><label class="param-label" for="capGrowthRate">Monthly Growth (%)</label><input type="number" id="capGrowthRate" class="param-input" value="3" step="0.1" /></div>
+          <div class="param-group"><label class="param-label" for="capAHT">AHT (seconds)</label><input type="number" id="capAHT" class="param-input" value="240" /></div>
+          <div class="param-group"><label class="param-label" for="capOccupancy">Target Occupancy (%)</label><input type="number" id="capOccupancy" class="param-input" value="85" min="50" max="99" /></div>
+          <div class="param-group"><label class="param-label" for="capShrinkage">Shrinkage (%)</label><input type="number" id="capShrinkage" class="param-input" value="28" /></div>
+          <div class="param-group"><label class="param-label" for="capMonths">Planning Horizon (months)</label><input type="number" id="capMonths" class="param-input" value="6" min="1" max="24" /></div>
+        </div>
+        <div class="panel-body">
+          <button class="btn-primary btn-full" id="capacityCalcBtn">Generate Capacity Plan</button>
+        </div>
+      </div>
+      <div class="panel capacity-result-panel" id="capacityResult" aria-live="polite">
+        <div class="erlang-placeholder">Run calculation to see results</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SHRINKAGE ========== -->
+<section class="tool-section bg-alt" id="shrinkage" aria-labelledby="shrinkageHeading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Shrinkage Calculator WFM</div>
+      <h2 id="shrinkageHeading" class="section-h2">Shrinkage Calculator</h2>
+      <p class="section-desc">Calculate total <strong>shrinkage in WFM</strong> by entering planned and unplanned components. Understand the true cost of agent unavailability on your staffing requirements.</p>
+    </div>
+    <div class="shrinkage-grid">
+      <div class="panel">
+        <div class="panel-header"><h3 class="panel-title">Planned Shrinkage</h3></div>
+        <div class="panel-body params-grid">
+          <div class="param-group"><label class="param-label" for="shrBreaks">Breaks (%)</label><input type="number" id="shrBreaks" class="param-input" value="8" step="0.5" /></div>
+          <div class="param-group"><label class="param-label" for="shrMeals">Meals (%)</label><input type="number" id="shrMeals" class="param-input" value="5" step="0.5" /></div>
+          <div class="param-group"><label class="param-label" for="shrTraining">Training (%)</label><input type="number" id="shrTraining" class="param-input" value="4" step="0.5" /></div>
+          <div class="param-group"><label class="param-label" for="shrMeetings">Meetings (%)</label><input type="number" id="shrMeetings" class="param-input" value="3" step="0.5" /></div>
+        </div>
+        <div class="panel-header"><h3 class="panel-title">Unplanned Shrinkage</h3></div>
+        <div class="panel-body params-grid">
+          <div class="param-group"><label class="param-label" for="shrAbsence">Absenteeism (%)</label><input type="number" id="shrAbsence" class="param-input" value="5" step="0.5" /></div>
+          <div class="param-group"><label class="param-label" for="shrLate">Late Arrivals (%)</label><input type="number" id="shrLate" class="param-input" value="2" step="0.5" /></div>
+          <div class="param-group"><label class="param-label" for="shrSys">System Issues (%)</label><input type="number" id="shrSys" class="param-input" value="1" step="0.5" /></div>
+        </div>
+        <div class="panel-body">
+          <button class="btn-primary btn-full" id="shrinkageCalcBtn">Calculate Shrinkage</button>
+        </div>
+      </div>
+      <div class="panel shrinkage-result-panel" id="shrinkageResult" aria-live="polite">
+        <div class="erlang-placeholder">Run calculation to see results</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SEO CONTENT ========== -->
+<section class="content-section" id="schedule" aria-labelledby="contentHeading">
+  <div class="container content-container">
+    <article class="content-article">
+      <h2 id="wfmForecastHeading" class="content-h2">What is Workforce Management Forecasting?</h2>
+      <p>Workforce management forecasting is the analytical process of predicting future contact volumes—calls, chats, emails—to ensure the right number of agents with the right skills are scheduled at the right time. At its core, a <strong>WFM forecasting tool</strong> uses historical volume patterns, trend analysis, seasonality modeling, and business intelligence to generate statistically-sound predictions for every 15 or 30-minute interval of the day.</p>
+      <p>Modern <strong>workforce management tools</strong> go beyond simple moving averages. They incorporate machine learning to identify non-linear demand drivers, detect forecast bias over time, and produce confidence intervals that enable planners to build robust schedule buffers. For call centers handling 100,000+ monthly contacts, even a 5% improvement in forecast accuracy can translate to hundreds of thousands in labor cost savings while simultaneously improving service levels.</p>
+      <p>The foundation of any WFM forecast is the arrival rate distribution—understanding not just daily volume, but precisely how contacts arrive across every interval. This data powers the <strong>Erlang C calculator</strong> that determines the staffing required to meet your target service level. Without accurate forecasting, no amount of scheduling optimization can produce consistently excellent customer experiences.</p>
+    </article>
+    <article class="content-article">
+      <h2 id="intradayHeading" class="content-h2">How Intraday Management Impacts SLA</h2>
+      <p>Service Level Agreement performance is won or lost in real time. <strong>Intraday management WFM</strong> is the discipline of continuously monitoring live queue metrics against forecasted expectations and taking rapid corrective action when deviations emerge. A contact center that excels at intraday management can consistently hit 80/20 SLA targets even on days when volume runs 20–30% above forecast.</p>
+      <p>The critical insight is that SLA degradation is non-linear. When staffing drops just 10% below the Erlang C requirement, service levels can collapse from 85% to below 50%—because queuing theory dictates that small staffing deficits create exponentially longer wait times. This is why early detection through <strong>forecast vs actual analysis</strong> is essential. Identifying a volume surge in the first two intervals—rather than reacting 30 minutes later—is the difference between a minor SLA dip and a major customer experience incident.</p>
+      <p>Effective intraday teams use a combination of real-time dashboards, automated variance alerts, and pre-built action playbooks. When the <strong>real-time WFM dashboard</strong> shows actual volumes trending 15% above forecast, a well-prepared intraday analyst can immediately trigger agent redeployment from email queues, initiate voluntary overtime offers, and escalate to operations management—all within the same interval window.</p>
+    </article>
+    <article class="content-article">
+      <h2 id="toolBenefitsHeading" class="content-h2">How This WFM Tool Helps</h2>
+      <ul class="benefit-list">
+        <li><strong>AI-Powered Root Cause Analysis:</strong> Automatically identifies whether volume deviations stem from arrival pattern drift, day-of-week bias, or genuine demand surges—eliminating manual investigation time.</li>
+        <li><strong>Erlang C Staffing Engine:</strong> Built-in <strong>call center staffing calculator</strong> that computes exact agent requirements for any traffic scenario, adjusted for shrinkage and occupancy targets.</li>
+        <li><strong>Forecast vs Actual Variance Detection:</strong> Real-time statistical comparison across multiple intervals to identify trends before they become SLA crises.</li>
+        <li><strong>Call Center Capacity Planning:</strong> Multi-month headcount modeling with growth scenario analysis and hiring lead-time integration.</li>
+        <li><strong>Shrinkage Calculator:</strong> Granular breakdown of planned vs unplanned shrinkage components with automatic staffing multiplier calculation.</li>
+        <li><strong>Actionable Escalation Workflows:</strong> One-click email escalation to Gmail or Outlook with pre-formatted WFM summary reports ready for operations leadership.</li>
+        <li><strong>AI Copilot:</strong> Context-aware assistant trained on WFM best practices for instant answers to intraday management questions.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="faq-section" aria-labelledby="faqHeading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Knowledge Base</div>
+      <h2 id="faqHeading" class="section-h2">Frequently Asked Questions</h2>
+      <p class="section-desc">Expert answers to the most common <strong>workforce management</strong> and <strong>call center capacity planning</strong> questions.</p>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq1">What is Erlang C in workforce management?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq1" hidden><p>Erlang C is a mathematical formula used in workforce management to calculate the probability that a call will need to wait before being answered. It determines the minimum number of agents needed to achieve a target service level, accounting for call volume, average handle time, and desired answer speed. Named after Danish mathematician A.K. Erlang, it remains the industry-standard model for <strong>call center staffing calculator</strong> applications worldwide.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq2">How do you calculate call center staffing?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq2" hidden><p>Call center staffing is calculated using historical call volume forecasts, average handle time (AHT), target service level, shrinkage percentage, and the Erlang C formula. First, determine the base agent count needed using Erlang C. Then divide by (1 - shrinkage%) to get total required headcount. For example, if Erlang C indicates 50 agents with 28% shrinkage, you need 50 ÷ 0.72 = 69.4 ≈ 70 agents on roster.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq3">What is forecast vs actual analysis in WFM?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq3" hidden><p>Forecast vs actual analysis compares predicted call volumes against real intraday data to identify variance. This helps WFM teams detect arrival pattern drift, staffing gaps, and SLA risks early enough to take corrective action. Variance % = (Actual - Forecast) / Forecast × 100. Positive variance means higher-than-expected volume; negative variance means lower volume, potentially signaling over-staffing.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq4">What is shrinkage in WFM?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq4" hidden><p>Shrinkage in workforce management refers to the percentage of scheduled time that agents are unavailable for customer interactions. It includes planned shrinkage (breaks, meals, meetings, training) and unplanned shrinkage (absenteeism, late arrivals, system issues). Typical call center shrinkage ranges from 25% to 35%. Use our <strong>shrinkage calculator WFM</strong> tool above to compute your exact shrinkage percentage.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq5">How to manage intraday performance in a call center?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq5" hidden><p>Intraday management involves continuously monitoring real-time metrics against forecasts and adjusting staffing dynamically. Key actions include: (1) real-time variance tracking every interval, (2) setting early warning thresholds at 10-15% variance, (3) queue-based agent reallocation, (4) voluntary overtime triggers, and (5) escalation workflows. AI-powered tools like ABIRE OS can automate risk detection and recommend corrective actions instantly.</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq6">What is call center capacity planning?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq6" hidden><p>Call center capacity planning is the strategic process of determining the right number of agents, skills, and resources needed to meet future demand. It involves long-range volume forecasting (3–12 months), hiring lead-time analysis, skill mix modeling, and scenario planning for peak events. Effective <strong>call center capacity planning</strong> ensures you're never over-staffed (reducing cost) or under-staffed (protecting SLA).</p></div></div>
+      <div class="faq-item"><button class="faq-q" aria-expanded="false" aria-controls="faq7">How does AI improve workforce management forecasting?<span class="faq-arrow">▾</span></button><div class="faq-a" id="faq7" hidden><p>AI improves WFM forecasting by detecting non-linear demand patterns, incorporating external signals (weather, marketing campaigns, social events), identifying forecast bias over rolling periods, and generating confidence intervals. AI-powered <strong>workforce management tools</strong> also automate root cause analysis when deviations occur and recommend corrective staffing actions in real time.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAILY REPORT SCHEDULER ========== -->
+<section class="tool-section bg-alt" aria-labelledby="schedulerHeading">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Automation</div>
+      <h2 id="schedulerHeading" class="section-h2">Daily Report Scheduler</h2>
+      <p class="section-desc">Schedule automated WFM summary reports delivered directly to your inbox.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-body scheduler-body">
+        <div class="param-group"><label class="param-label" for="reportEmail">Email Address</label><input type="email" id="reportEmail" class="param-input" placeholder="wfm@yourcompany.com" /></div>
+        <div class="param-group"><label class="param-label" for="reportTime">Delivery Time</label><input type="time" id="reportTime" class="param-input" value="07:00" /></div>
+        <div class="scheduler-btns">
+          <button class="btn-primary" id="scheduleBtn">📅 Schedule Reports</button>
+          <button class="btn-secondary" id="sendNowBtn">⚡ Send Now</button>
+        </div>
+      </div>
+      <div id="schedulerStatus" class="scheduler-status"></div>
+      <div id="scheduledList" class="scheduled-list"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-icon" aria-hidden="true">⬡</span>
+      <span class="logo-text">ABIRE <span class="logo-os">OS</span></span>
+      <p class="footer-tagline">AI Workforce Management Platform</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <div class="footer-col">
+        <h3 class="footer-col-title">WFM Tools</h3>
+        <ul>
+          <li><a href="#tool" class="footer-link">Forecast Guardian</a></li>
+          <li><a href="#erlang" class="footer-link">Erlang C staffing calculator</a></li>
+          <li><a href="#capacity" class="footer-link">WFM capacity planning tool</a></li>
+          <li><a href="#shrinkage" class="footer-link">Shrinkage calculator WFM</a></li>
+          <li><a href="#schedule" class="footer-link">Schedule optimizer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-col-title">Resources</h3>
+        <ul>
+          <li><a href="#faqList" class="footer-link">WFM FAQ</a></li>
+          <li><a href="#wfmForecastHeading" class="footer-link">WFM Forecasting Guide</a></li>
+          <li><a href="#intradayHeading" class="footer-link">Intraday Management Guide</a></li>
+          <li><a href="#toolBenefitsHeading" class="footer-link">Contact Center Analytics</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ABIRE OS. AI-Powered Workforce Management Tools for Call Centers &amp; Contact Centers.</p>
+  </div>
+</footer>
+
+<!-- AI COPILOT FAB -->
+<div class="copilot-fab" id="copilotFab" aria-label="Open AI Copilot" role="button" tabindex="0">
+  <span class="copilot-icon" aria-hidden="true">🤖</span>
+  <span class="copilot-pulse" aria-hidden="true"></span>
+</div>
+
+<div class="copilot-panel" id="copilotPanel" aria-label="AI WFM Copilot" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="copilot-header">
+    <div class="copilot-title"><span aria-hidden="true">🤖</span> WFM AI Copilot</div>
+    <button class="copilot-close" id="copilotClose" aria-label="Close copilot">✕</button>
+  </div>
+  <div class="copilot-messages" id="copilotMessages" role="log" aria-live="polite">
+    <div class="copilot-msg bot"><div class="msg-bubble">Hey! I'm your WFM AI Copilot. Ask me anything about workforce management, Erlang C, shrinkage, or intraday analysis.</div></div>
+  </div>
+  <div class="copilot-suggestions">
+    <button class="suggestion-chip" data-q="What is Erlang C?">What is Erlang C?</button>
+    <button class="suggestion-chip" data-q="How to reduce shrinkage?">Reduce shrinkage</button>
+    <button class="suggestion-chip" data-q="SLA best practices">SLA best practices</button>
+    <button class="suggestion-chip" data-q="Explain forecast bias">Forecast bias</button>
+  </div>
+  <div class="copilot-input-row">
+    <input type="text" id="copilotInput" class="copilot-input" placeholder="Ask about WFM, Erlang, SLA..." aria-label="Ask a question" />
+    <button class="copilot-send" id="copilotSend" aria-label="Send">➤</button>
+  </div>
+</div>
+
+<!-- [FIXED] All JavaScript inlined — no external script.js dependency -->
+<!-- ============================================================
+     ABIRE OS – Production Script
+     Chart.js via CDN for interactive charts
+     All functions globally named for maximum compatibility
+     DOMContentLoaded for safe DOM binding
+     GitHub Pages compatible: zero local deps, pure client-side
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+/* ============================================================
+   ABIRE OS WFM Forecast Guardian — Full Production JavaScript
+   Fixes applied:
+   1. Chart.js CDN-powered interactive chart (replaces raw canvas)
+   2. All 7 button handlers explicitly bound
+   3. Global function names (no IIFE scope issues)
+   4. DOMContentLoaded safety wrapper
+   5. Defensive null-checks on every DOM query
+   6. Friendly fallback messages on empty/bad input
+   7. Full console logging for GitHub Pages debugging
+   ============================================================ */
+
+console.log('[ABIRE OS] ✅ Script loaded — v4.0 Production');
+
+// ============================================================
+// STATE
+// ============================================================
+var _lastResult  = null;
+var _wfmChart    = null;   // Chart.js instance
+
+// ============================================================
+// LIVE CLOCK — IST
+// ============================================================
+function updateLiveClock() {
+  try {
+    var now = new Date();
+    var ist = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + 19800000); // +5:30
+    var opts = { weekday:'short', year:'numeric', month:'short', day:'numeric' };
+    var dateStr = ist.toLocaleDateString('en-IN', opts);
+    var timeStr = ist.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:true });
+    var totalMins = ist.getHours() * 60 + ist.getMinutes();
+    var idx = Math.floor(totalMins / 30);
+    var h1 = String(Math.floor(idx * 30 / 60)).padStart(2,'0');
+    var m1 = (idx * 30 % 60 === 0) ? '00' : '30';
+    var h2 = String(Math.floor((idx+1) * 30 / 60)).padStart(2,'0');
+    var m2 = ((idx+1) * 30 % 60 === 0) ? '00' : '30';
+    var el;
+    el = document.getElementById('liveDate');    if (el) el.textContent = dateStr + ' IST';
+    el = document.getElementById('liveTime');    if (el) el.textContent = timeStr;
+    el = document.getElementById('liveInterval');if (el) el.textContent = 'Interval ' + (idx+1) + ' (' + h1+':'+m1 + '\u2013' + h2+':'+m2 + ')';
+  } catch(e) { /* silent */ }
+}
+
+// ============================================================
+// TOAST NOTIFICATION
+// ============================================================
+function showToast(msg) {
+  var t = document.getElementById('abireToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'abireToast';
+    t.style.cssText = [
+      'position:fixed','bottom:100px','left:50%','transform:translateX(-50%)',
+      'background:rgba(13,13,22,0.97)','border:1px solid rgba(124,58,237,0.5)',
+      'color:#F1F1F5','padding:11px 22px','border-radius:10px','font-size:13px',
+      'z-index:99999','backdrop-filter:blur(14px)','transition:opacity 0.35s',
+      'font-family:Inter,sans-serif','pointer-events:none','white-space:nowrap',
+      'box-shadow:0 4px 24px rgba(124,58,237,0.3)'
+    ].join(';');
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._tid);
+  t._tid = setTimeout(function(){ t.style.opacity = '0'; }, 3200);
+}
+
+// ============================================================
+// SAMPLE DATA GENERATORS
+// ============================================================
+function generateSampleData() {
+  var days = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  var base = {
+    Monday:    [980,1120,1340,1520,1680,1750,1820,1900,1960,2010,1980,1850,1760,1690,1580,1420,1280,1100,920,780],
+    Tuesday:   [1020,1150,1390,1560,1720,1800,1870,1940,2020,2060,2030,1900,1810,1720,1610,1450,1310,1130,950,800],
+    Wednesday: [960,1100,1310,1490,1650,1720,1790,1860,1920,1970,1940,1820,1730,1660,1550,1390,1250,1070,900,760],
+    Thursday:  [1000,1130,1360,1540,1700,1760,1840,1910,1970,2030,2000,1870,1780,1710,1600,1440,1290,1110,935,790],
+    Friday:    [1050,1180,1420,1600,1760,1840,1920,1990,2050,2100,2070,1940,1850,1780,1660,1500,1360,1180,995,850]
+  };
+  var rows = [], today = new Date();
+  for (var w = 0; w < 5; w++) {
+    for (var d = 0; d < 5; d++) {
+      var dt = new Date(today);
+      dt.setDate(dt.getDate() - (w*7) - (4-d));
+      var ds = dt.toISOString().split('T')[0];
+      var vols = base[days[d]];
+      for (var i = 0; i < vols.length; i++) {
+        var fc = Math.round(vols[i] * (1 + (Math.random()*0.18 - 0.09)));
+        var ac = Math.round(vols[i] * (1 + (Math.random()*0.24 - 0.08)));
+        rows.push(ds + ',' + days[d] + ',' + fc + ',' + ac);
+      }
+    }
+  }
+  return rows.join('\n');
+}
+
+function generateRandomData() {
+  var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var rows = [], today = new Date();
+  for (var d = 0; d < 7; d++) {
+    var dt = new Date(today);
+    dt.setDate(dt.getDate() - d);
+    var ds = dt.toISOString().split('T')[0];
+    var dn = dayNames[dt.getDay()];
+    var base = 800 + Math.random() * 1400;
+    for (var i = 0; i < 16; i++) {
+      var pf = (i >= 2 && i <= 12) ? 1.2 : 0.7;
+      var spk = (i === 6 && Math.random() > 0.6) ? 1.45 : 1;
+      var fc = Math.round(base * pf * (0.88 + Math.random()*0.24));
+      var ac = Math.round(fc * spk * (0.82 + Math.random()*0.38));
+      rows.push(ds + ',' + dn + ',' + fc + ',' + ac);
+    }
+  }
+  return rows.join('\n');
+}
+
+// ============================================================
+// LOAD SAMPLE DATA — public function wired to button
+// ============================================================
+function loadSampleData() {
+  console.log('[ABIRE OS] loadSampleData()');
+  var ta = document.getElementById('dataInput');
+  if (!ta) return;
+  ta.value = generateSampleData();
+  showToast('📊 5-week sample data loaded — ready to analyse');
+}
+
+// ============================================================
+// GENERATE RANDOM — public function wired to button
+// ============================================================
+function generateRandom() {
+  console.log('[ABIRE OS] generateRandom()');
+  var ta = document.getElementById('dataInput');
+  if (!ta) return;
+  ta.value = generateRandomData();
+  showToast('🎲 Random dataset generated');
+}
+
+// ============================================================
+// DATA PARSER
+// ============================================================
+function parseData(raw) {
+  if (!raw || !raw.trim()) return [];
+  var rows = raw.trim().split('\n');
+  var data = [];
+  for (var i = 0; i < rows.length; i++) {
+    var parts = rows[i].split(',');
+    if (parts.length < 4) continue;
+    var fc = parseFloat(parts[2]);
+    var ac = parseFloat(parts[3]);
+    if (isNaN(fc) || isNaN(ac) || fc <= 0) continue;
+    data.push({ date: parts[0].trim(), day: parts[1].trim(), forecast: fc, actual: ac });
+  }
+  return data;
+}
+
+// ============================================================
+// ERLANG C MATH ENGINE
+// ============================================================
+function erlangC(lambda, aht, agents) {
+  if (agents <= 0) return 1;
+  var mu  = 3600 / aht;
+  var rho = lambda / (agents * mu);
+  if (rho >= 1) return 1;
+  var A = lambda / mu;
+  var sum = 0, fact = 1;
+  for (var k = 0; k < agents; k++) {
+    if (k > 0) fact *= k;
+    sum += Math.pow(A, k) / fact;
+  }
+  var nFact   = fact * agents;
+  var last    = Math.pow(A, agents) / nFact;
+  var ecv     = last * (agents * mu / (agents * mu - lambda));
+  return ecv / (sum + ecv);
+}
+
+function calcSL(lambda, aht, agents, asa) {
+  var mu  = 3600 / aht;
+  var rho = lambda / (agents * mu);
+  if (agents === 0 || rho >= 1) return 0;
+  var Ec = erlangC(lambda, aht, agents);
+  return Math.max(0, Math.min(1, 1 - Ec * Math.exp(-(agents * mu - lambda) * asa)));
+}
+
+function findMinAgents(lambda, aht, targetSL, asa, shrink) {
+  var mu   = 3600 / aht;
+  var minN = Math.ceil(lambda / mu) + 1;
+  for (var n = minN; n <= minN + 300; n++) {
+    var sl = calcSL(lambda, aht, n, asa);
+    if (sl >= targetSL / 100) {
+      return {
+        base:  n,
+        total: Math.ceil(n / (1 - shrink / 100)),
+        sl:    sl,
+        ec:    erlangC(lambda, aht, n),
+        occ:   (lambda * aht / 3600) / n * 100,
+        awt:   erlangC(lambda, aht, n) * (aht / (n - lambda * aht / 3600))
+      };
+    }
+  }
+  return null;
+}
+
+// ============================================================
+// CHART.JS — FORECAST vs ACTUAL
+// ============================================================
+function renderChartJS(data) {
+  var canvas = document.getElementById('wfmChart');
+  if (!canvas) { console.warn('[ABIRE OS] #wfmChart not found'); return; }
+  if (typeof Chart === 'undefined') { console.warn('[ABIRE OS] Chart.js not loaded'); return; }
+
+  // Destroy existing chart
+  if (_wfmChart) { _wfmChart.destroy(); _wfmChart = null; }
+
+  var display = data.slice(0, 40);
+  var labels   = display.map(function(d, i) { return d.date ? d.date.slice(5) + ' #' + (i+1) : 'I'+(i+1); });
+  var forecasts= display.map(function(d) { return d.forecast; });
+  var actuals  = display.map(function(d) { return d.actual; });
+  var variances= display.map(function(d) { return parseFloat(((d.actual - d.forecast) / d.forecast * 100).toFixed(1)); });
+
+  // Set canvas explicit dimensions for GitHub Pages rendering
+  var container = canvas.parentElement;
+  canvas.style.display = 'block';
+
+  _wfmChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Forecast',
+          data: forecasts,
+          backgroundColor: 'rgba(99,102,241,0.55)',
+          borderColor: 'rgba(99,102,241,0.9)',
+          borderWidth: 1,
+          borderRadius: 3,
+          order: 2
+        },
+        {
+          label: 'Actual',
+          data: actuals,
+          backgroundColor: actuals.map(function(a, i) {
+            var v = variances[i];
+            if (v > 15)  return 'rgba(239,68,68,0.75)';
+            if (v > 5)   return 'rgba(245,158,11,0.75)';
+            if (v < -15) return 'rgba(6,182,212,0.65)';
+            return 'rgba(16,185,129,0.75)';
+          }),
+          borderColor: actuals.map(function(a, i) {
+            var v = variances[i];
+            if (v > 15)  return 'rgba(239,68,68,1)';
+            if (v > 5)   return 'rgba(245,158,11,1)';
+            if (v < -15) return 'rgba(6,182,212,1)';
+            return 'rgba(16,185,129,1)';
+          }),
+          borderWidth: 1,
+          borderRadius: 3,
+          order: 2
+        },
+        {
+          label: 'Variance %',
+          data: variances,
+          type: 'line',
+          borderColor: 'rgba(167,139,250,0.85)',
+          borderWidth: 2,
+          pointBackgroundColor: 'rgba(167,139,250,1)',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          fill: false,
+          tension: 0.35,
+          yAxisID: 'yVar',
+          order: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 600, easing: 'easeInOutQuart' },
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color: 'rgba(255,255,255,0.6)',
+            font: { family: "'JetBrains Mono', monospace", size: 11 },
+            boxWidth: 12, padding: 16
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(13,13,22,0.95)',
+          borderColor: 'rgba(124,58,237,0.4)',
+          borderWidth: 1,
+          titleColor: '#F1F1F5',
+          bodyColor: 'rgba(255,255,255,0.7)',
+          titleFont: { family: "'Syne', sans-serif", weight: 'bold' },
+          callbacks: {
+            afterBody: function(items) {
+              var i = items[0].dataIndex;
+              return 'Variance: ' + variances[i] + '%';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: 'rgba(255,255,255,0.4)',
+            font: { family: 'monospace', size: 9 },
+            maxRotation: 45,
+            maxTicksLimit: 12
+          },
+          grid: { color: 'rgba(255,255,255,0.04)' }
+        },
+        y: {
+          position: 'left',
+          ticks: { color: 'rgba(255,255,255,0.4)', font: { size: 10, family: 'monospace' } },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          title: { display: true, text: 'Volume', color: 'rgba(255,255,255,0.35)', font: { size: 10 } }
+        },
+        yVar: {
+          position: 'right',
+          ticks: {
+            color: 'rgba(167,139,250,0.7)',
+            font: { size: 10, family: 'monospace' },
+            callback: function(v) { return v + '%'; }
+          },
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: 'Variance %', color: 'rgba(167,139,250,0.5)', font: { size: 10 } }
+        }
+      }
+    }
+  });
+  console.log('[ABIRE OS] Chart.js chart rendered with', display.length, 'intervals');
+}
+
+// ============================================================
+// ANALYSIS ENGINE
+// ============================================================
+function analyzeData(data, params) {
+  var n = data.length;
+  if (n === 0) return null;
+
+  var threshold   = params.peakThreshold;
+  var bufferPct   = params.bufferPct;
+  var earlyWindow = params.earlyWindow;
+  var aht         = params.ahtSeconds;
+
+  var varPcts = data.map(function(d) { return (d.actual - d.forecast) / d.forecast * 100; });
+  var avgVar  = varPcts.reduce(function(a,b){return a+b;},0) / n;
+  var absAvg  = Math.abs(avgVar);
+
+  var spikes = data.filter(function(d,i){ return varPcts[i] >  threshold; });
+  var dips   = data.filter(function(d,i){ return varPcts[i] < -threshold; });
+
+  var earlySlice = data.slice(0, Math.min(earlyWindow, n));
+  var earlyAvg   = earlySlice.map(function(d){ return (d.actual-d.forecast)/d.forecast*100; })
+                              .reduce(function(a,b){return a+b;},0) / earlySlice.length;
+
+  var posCount  = varPcts.filter(function(v){return v>0;}).length;
+  var biasRatio = posCount / n;
+  var hasBias   = biasRatio > 0.7 || biasRatio < 0.3;
+  var biasDir   = biasRatio > 0.7 ? 'under-forecast' : biasRatio < 0.3 ? 'over-forecast' : 'neutral';
+
+  var h1   = varPcts.slice(0, Math.floor(n/2));
+  var h2   = varPcts.slice(Math.floor(n/2));
+  var avg1 = h1.reduce(function(a,b){return a+b;},0) / h1.length;
+  var avg2 = h2.reduce(function(a,b){return a+b;},0) / h2.length;
+  var drift = avg2 - avg1;
+
+  var maxVar = Math.max.apply(null, varPcts);
+  var minVar = Math.min.apply(null, varPcts);
+  var maxIdx = varPcts.indexOf(maxVar);
+
+  var totFc = data.reduce(function(a,d){return a+d.forecast;},0);
+  var totAc = data.reduce(function(a,d){return a+d.actual;},0);
+  var totVP = (totAc - totFc) / totFc * 100;
+
+  var avgFc   = totFc / n;
+  var staffGap= Math.round(((totAc/n - avgFc) / avgFc) * Math.ceil(avgFc * 2 * aht / 3600));
+
+  var riskScore = absAvg * 0.4 + (spikes.length / n) * 100 * 0.3 + Math.abs(drift) * 0.3;
+  var status, cls, emoji, sub;
+  if (riskScore < 12) {
+    status='STABLE';  cls='green';  emoji='🟢'; sub='Forecast tracking well. No immediate action required.';
+  } else if (riskScore < 28) {
+    status='MONITOR'; cls='yellow'; emoji='🟡'; sub='Elevated variance detected. Intraday attention recommended.';
+  } else {
+    status='CRITICAL';cls='red';    emoji='🔴'; sub='Significant deviation. Immediate intraday action required.';
+  }
+
+  var conf = Math.max(40, Math.min(99, Math.round(100 - absAvg * 1.5 - spikes.length * 2)));
+
+  var causes = [];
+  if (Math.abs(drift) > 8) causes.push({ sev:'high',   text:'Arrival pattern drift: ' + (drift>0?'accelerating':'decelerating') + ' trend (' + (drift>0?'+':'') + drift.toFixed(1) + '% shift in second half of dataset)' });
+  if (hasBias)             causes.push({ sev:'medium', text:'Systematic ' + biasDir + ': ' + Math.round(Math.max(biasRatio,(1-biasRatio))*100) + '% of intervals show consistent ' + (biasRatio>0.7?'positive':'negative') + ' variance' });
+  if (spikes.length > 0)   causes.push({ sev:'high',   text:spikes.length + ' interval' + (spikes.length>1?'s':'') + ' exceeded peak threshold (>' + threshold + '% above forecast)' });
+  if (earlyAvg > threshold*0.7) causes.push({ sev:'medium', text:'Early-window lead indicator: first ' + earlyWindow + ' intervals avg ' + earlyAvg.toFixed(1) + '% above forecast — day-long over-performance likely' });
+  if (dips.length > 0)     causes.push({ sev:'low',    text:dips.length + ' under-performance interval' + (dips.length>1?'s':'') + ' detected (>' + threshold + '% below forecast)' });
+  if (maxVar > 30)         causes.push({ sev:'high',   text:'Extreme spike at interval ' + (maxIdx+1) + ': +' + maxVar.toFixed(1) + '% — investigate event-driven demand or routing issue' });
+  if (causes.length === 0) causes.push({ sev:'low',    text:'No significant root causes. Forecast model performing within acceptable bounds.' });
+
+  var actions = [];
+  if (cls === 'red' || cls === 'yellow') {
+    if (totVP > 10) actions.push('IMMEDIATE: Volunteer overtime protocol — est. ' + Math.abs(staffGap) + ' additional agents required across peak intervals');
+    if (drift > 8)  actions.push('SHORT-TERM: Reforecast afternoon intervals using morning actuals — apply +' + Math.abs(drift).toFixed(0) + '% uplift factor');
+    if (hasBias)    actions.push('FORECAST: Recalibrate ' + biasDir + ' model — apply ' + (biasRatio>0.7?'+':'-') + Math.abs(biasRatio*100-50).toFixed(0) + '% correction to next planning cycle');
+    if (spikes.length > 2) actions.push('MONITORING: Increase review cadence to every interval for the next 2 hours');
+    actions.push('COMMUNICATION: Brief ops leads on SLA risk. Pre-position ' + bufferPct + '% staffing buffer for next ' + earlyWindow + ' intervals.');
+  } else {
+    actions.push('MAINTAIN: Continue standard 30-minute monitoring cadence');
+    actions.push('REVIEW: Validate ' + bufferPct + '% buffer adequacy for next planning period');
+    actions.push('LOG: Capture forecast accuracy metrics in weekly WFM accuracy report');
+  }
+
+  return {
+    status:status, cls:cls, emoji:emoji, sub:sub, conf:conf,
+    avgVar:avgVar, absAvg:absAvg, maxVar:maxVar, minVar:minVar,
+    totVP:totVP, totFc:totFc, totAc:totAc,
+    spikes:spikes, dips:dips,
+    hasBias:hasBias, biasDir:biasDir, drift:drift,
+    earlyAvg:earlyAvg, causes:causes, actions:actions,
+    varPcts:varPcts, data:data, staffGap:staffGap
+  };
+}
+
+// ============================================================
+// RENDER OUTPUT PANELS
+// ============================================================
+function renderOutput(result) {
+  var ph = document.getElementById('outputPlaceholder');
+  var oc = document.getElementById('outputContent');
+  if (ph) ph.style.display = 'none';
+  if (oc) oc.classList.remove('hidden');
+
+  // Status
+  var ind = document.getElementById('statusIndicator');
+  var lbl = document.getElementById('statusLabel');
+  var sub = document.getElementById('statusSub');
+  var bdg = document.getElementById('confidenceBadge');
+  if (ind) { ind.className = 'status-indicator ' + result.cls; ind.textContent = result.emoji; }
+  if (lbl) { lbl.className = 'status-label ' + result.cls; lbl.textContent = result.status; }
+  if (sub) sub.textContent = result.sub;
+  if (bdg) bdg.textContent = result.conf + '% confidence';
+
+  // Metrics
+  var mr = document.getElementById('metricsRow');
+  if (mr) {
+    var ac = Math.abs(result.avgVar) < 5 ? 'green' : Math.abs(result.avgVar) < 15 ? 'yellow' : 'red';
+    var tc = Math.abs(result.totVP)  < 5 ? 'green' : Math.abs(result.totVP)  < 15 ? 'yellow' : 'red';
+    mr.innerHTML =
+      '<div class="metric-card"><div class="metric-val '+ac+'">'+(result.avgVar>0?'+':'')+result.avgVar.toFixed(1)+'%</div><div class="metric-lbl">Avg Variance</div></div>'+
+      '<div class="metric-card"><div class="metric-val '+tc+'">'+(result.totVP>0?'+':'')+result.totVP.toFixed(1)+'%</div><div class="metric-lbl">Total Volume Var</div></div>'+
+      '<div class="metric-card"><div class="metric-val blue">'+result.spikes.length+'</div><div class="metric-lbl">Spike Intervals</div></div>';
+  }
+
+  // Root causes
+  var cl = document.getElementById('causesList');
+  if (cl) cl.innerHTML = result.causes.map(function(c) {
+    return '<li class="cause-item"><span class="cause-dot '+c.sev+'"></span><span>'+c.text+'</span></li>';
+  }).join('');
+
+  // Actions
+  var al = document.getElementById('actionsList');
+  if (al) al.innerHTML = result.actions.map(function(a,i) {
+    return '<li class="action-item"><span class="action-num">'+(i+1)+'</span><span>'+a+'</span></li>';
+  }).join('');
+
+  // AI Summary
+  var ai = document.getElementById('aiSummaryContent');
+  if (ai) {
+    var riskLabel = result.cls === 'green' ? 'LOW — within tolerance. Monitor and log.'
+      : result.cls === 'yellow' ? 'MEDIUM — proactive intraday adjustments recommended before SLA impact.'
+      : 'HIGH — immediate intervention required. SLA degradation likely without action this interval.';
+    ai.innerHTML =
+      '<p><strong>📊 Situation:</strong> Analysis of <strong>'+result.data.length+'</strong> intervals shows <strong>'+result.status+'</strong> status with <strong>'+(result.avgVar>0?'+':'')+result.avgVar.toFixed(1)+'%</strong> avg variance.</p>'+
+      '<p><strong>⚠️ Risk Level:</strong> '+riskLabel+'</p>'+
+      '<p><strong>🔍 Causes:</strong> '+result.causes.slice(0,2).map(function(c){return c.text;}).join('. ')+'</p>'+
+      '<p><strong>✅ Action:</strong> '+result.actions[0]+(result.staffGap!==0?' Est. '+Math.abs(result.staffGap)+' agents.':'')+'</p>';
+  }
+
+  // Chart badge
+  var cb = document.getElementById('chartIntervalBadge');
+  if (cb) cb.textContent = result.data.length + ' intervals';
+
+  // Render Chart.js chart
+  renderChartJS(result.data);
+}
+
+// ============================================================
+// RUN ANALYSIS — main public function
+// ============================================================
+function runAnalysis() {
+  console.log('[ABIRE OS] runAnalysis() triggered');
+  var ta = document.getElementById('dataInput');
+  if (!ta || !ta.value.trim()) {
+    // Auto-load sample data if textarea is empty
+    if (ta) ta.value = generateSampleData();
+    showToast('📊 Sample data loaded — running analysis...');
+  }
+  var data = parseData(ta ? ta.value : '');
+  if (data.length === 0) {
+    showToast('❌ No valid data. Format: Date,Day,Forecast,Actual');
+    return;
+  }
+  var params = {
+    ahtSeconds:    parseFloat((document.getElementById('ahtInput')      ||{}).value) || 240,
+    slaTarget:     parseFloat((document.getElementById('slaTarget')     ||{}).value) || 80,
+    peakThreshold: parseFloat((document.getElementById('peakThreshold') ||{}).value) || 15,
+    bufferPct:     parseFloat((document.getElementById('bufferPct')     ||{}).value) || 10,
+    shrinkagePct:  parseFloat((document.getElementById('shrinkagePct')  ||{}).value) || 28,
+    earlyWindow:   parseInt(  (document.getElementById('earlyWindow')   ||{}).value) || 3
+  };
+  var result = analyzeData(data, params);
+  if (!result) { showToast('❌ Analysis failed — check data format'); return; }
+  _lastResult = result;
+  renderOutput(result);
+  var op = document.getElementById('outputPanel');
+  if (op) op.scrollIntoView({ behavior:'smooth', block:'start' });
+  showToast('✅ Analysis complete — ' + data.length + ' intervals processed');
+  console.log('[ABIRE OS] Analysis done, status:', result.status, 'intervals:', data.length);
+}
+
+// ============================================================
+// ERLANG C CALCULATOR — runErlangC()
+// ============================================================
+function runErlangC() {
+  console.log('[ABIRE OS] runErlangC()');
+  var lambda = parseFloat((document.getElementById('erlCallVol') ||{}).value) || 200;
+  var aht    = parseFloat((document.getElementById('erlAHT')     ||{}).value) || 240;
+  var sla    = parseFloat((document.getElementById('erlSLA')     ||{}).value) || 80;
+  var asa    = parseFloat((document.getElementById('erlASA')     ||{}).value) || 20;
+  var shrink = parseFloat((document.getElementById('erlShrink')  ||{}).value) || 28;
+  var el     = document.getElementById('erlangResult');
+  if (!el) return;
+
+  if (lambda <= 0 || aht <= 0 || sla <= 0 || asa <= 0) {
+    el.innerHTML = '<div class="erlang-placeholder" style="color:var(--yellow)">⚠️ Please enter valid positive values in all fields.</div>';
+    return;
+  }
+
+  var res = findMinAgents(lambda, aht, sla, asa, shrink);
+  if (!res) {
+    el.innerHTML = '<div class="erlang-placeholder" style="color:var(--red)">❌ Cannot achieve ' + sla + '% SLA with given parameters. Try reducing target SLA or AHT.</div>';
+    return;
+  }
+
+  el.innerHTML = '<div class="erlang-results">' +
+    '<div class="erl-big">' +
+      '<div class="erl-big-num">' + res.total + '</div>' +
+      '<div class="erl-big-lbl">Total Agents Required (incl. ' + shrink + '% shrinkage)</div>' +
+    '</div>' +
+    '<div class="erl-metrics">' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + res.base + '</div><div class="erl-metric-lbl">Base (Erlang C)</div></div>' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + (res.sl*100).toFixed(1) + '%</div><div class="erl-metric-lbl">Achieved SLA</div></div>' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + res.occ.toFixed(1) + '%</div><div class="erl-metric-lbl">Occupancy</div></div>' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + (isFinite(res.awt) ? res.awt.toFixed(0)+'s' : 'N/A') + '</div><div class="erl-metric-lbl">Avg Wait Time</div></div>' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + (res.ec*100).toFixed(1) + '%</div><div class="erl-metric-lbl">Erlang C P(wait)</div></div>' +
+      '<div class="erl-metric"><div class="erl-metric-val">' + (lambda*aht/3600).toFixed(2) + '</div><div class="erl-metric-lbl">Traffic (Erlangs)</div></div>' +
+    '</div>' +
+  '</div>';
+  showToast('✅ Erlang C: ' + res.total + ' agents required for ' + sla + '% SLA');
+}
+
+// ============================================================
+// CAPACITY PLANNER — runCapacityPlanning()
+// ============================================================
+function runCapacityPlanning() {
+  console.log('[ABIRE OS] runCapacityPlanning()');
+  var vol    = parseFloat((document.getElementById('capCurrentVol') ||{}).value) || 150000;
+  var growth = parseFloat((document.getElementById('capGrowthRate') ||{}).value) || 3;
+  var aht    = parseFloat((document.getElementById('capAHT')        ||{}).value) || 240;
+  var occ    = parseFloat((document.getElementById('capOccupancy')  ||{}).value) || 85;
+  var shrink = parseFloat((document.getElementById('capShrinkage')  ||{}).value) || 28;
+  var months = parseInt(  (document.getElementById('capMonths')     ||{}).value) || 6;
+  var el     = document.getElementById('capacityResult');
+  if (!el) return;
+
+  var rows = [];
+  for (var m = 0; m <= months; m++) {
+    var mv  = vol * Math.pow(1 + growth/100, m);
+    var cph = mv / (22 * 8);
+    var bn  = Math.ceil((cph * aht / 3600) / (occ / 100));
+    var tn  = Math.ceil(bn / (1 - shrink/100));
+    var d   = new Date(); d.setMonth(d.getMonth() + m);
+    rows.push({
+      month: d.toLocaleDateString('en-IN',{month:'short',year:'2-digit'}),
+      vol:   Math.round(mv), cph: cph.toFixed(0), base: bn, total: tn
+    });
+  }
+
+  var hcDelta = rows[rows.length-1].total - rows[0].total;
+  var tRows = rows.map(function(r) {
+    return '<tr><td>'+r.month+'</td><td>'+r.vol.toLocaleString()+'</td><td>'+r.cph+'</td><td>'+r.base+'</td><td style="color:var(--cyan);font-weight:700">'+r.total+'</td></tr>';
+  }).join('');
+
+  el.innerHTML = '<div class="erlang-results">' +
+    '<div class="erl-big"><div class="erl-big-num">'+rows[rows.length-1].total+'</div>' +
+    '<div class="erl-big-lbl">Required Headcount — Month '+months+' (+'+(hcDelta>0?'+':'')+hcDelta+' from today)</div></div>' +
+    '<div style="overflow-x:auto;padding:4px 0">' +
+    '<table class="cap-table"><thead><tr><th>Month</th><th>Volume</th><th>Calls/Hr</th><th>Base</th><th>w/ Shrinkage</th></tr></thead>' +
+    '<tbody>'+tRows+'</tbody></table></div></div>';
+  showToast('✅ Capacity plan generated for ' + months + ' months');
+}
+
+// ============================================================
+// SHRINKAGE CALCULATOR — runShrinkage()
+// ============================================================
+function runShrinkage() {
+  console.log('[ABIRE OS] runShrinkage()');
+  var breaks   = parseFloat((document.getElementById('shrBreaks')   ||{}).value) || 0;
+  var meals    = parseFloat((document.getElementById('shrMeals')    ||{}).value) || 0;
+  var training = parseFloat((document.getElementById('shrTraining') ||{}).value) || 0;
+  var meetings = parseFloat((document.getElementById('shrMeetings') ||{}).value) || 0;
+  var absence  = parseFloat((document.getElementById('shrAbsence')  ||{}).value) || 0;
+  var late     = parseFloat((document.getElementById('shrLate')     ||{}).value) || 0;
+  var sys      = parseFloat((document.getElementById('shrSys')      ||{}).value) || 0;
+  var el       = document.getElementById('shrinkageResult');
+  if (!el) return;
+
+  var planned   = breaks + meals + training + meetings;
+  var unplanned = absence + late + sys;
+  var total     = planned + unplanned;
+
+  if (total >= 100) {
+    el.innerHTML = '<div class="erlang-placeholder" style="color:var(--red)">❌ Total shrinkage cannot equal or exceed 100%.</div>';
+    return;
+  }
+
+  var mult  = 1 / (1 - total/100);
+  var color = total < 25 ? '#10B981' : total < 35 ? '#F59E0B' : '#EF4444';
+
+  el.innerHTML = '<div class="shrinkage-results">' +
+    '<div class="shr-gauge-wrap">' +
+      '<div class="shr-gauge" style="border-color:'+color+';box-shadow:0 0 24px '+color+'55"></div>' +
+      '<div class="shr-pct">'+total.toFixed(1)+'%</div>' +
+      '<div class="shr-lbl">Total Shrinkage</div>' +
+    '</div>' +
+    '<div class="shr-breakdown">' +
+      '<div class="shr-row"><span class="shr-row-lbl">Breaks</span><span class="shr-row-val">'+breaks+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">Meals</span><span class="shr-row-val">'+meals+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">Training</span><span class="shr-row-val">'+training+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">Meetings</span><span class="shr-row-val">'+meetings+'%</span></div>' +
+      '<div class="shr-row" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:8px;margin-top:4px"><span class="shr-row-lbl" style="color:var(--text)">Planned Total</span><span class="shr-row-val" style="color:var(--yellow)">'+planned.toFixed(1)+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">Absenteeism</span><span class="shr-row-val">'+absence+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">Late Arrivals</span><span class="shr-row-val">'+late+'%</span></div>' +
+      '<div class="shr-row"><span class="shr-row-lbl">System Issues</span><span class="shr-row-val">'+sys+'%</span></div>' +
+      '<div class="shr-row" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:8px;margin-top:4px"><span class="shr-row-lbl" style="color:var(--text)">Unplanned Total</span><span class="shr-row-val" style="color:var(--red)">'+unplanned.toFixed(1)+'%</span></div>' +
+    '</div>' +
+    '<div class="shr-multiplier"><span class="shr-mult-lbl">Staffing Multiplier</span><span class="shr-mult-val">&times;'+mult.toFixed(3)+'</span></div>' +
+  '</div>';
+  showToast('✅ Total shrinkage: ' + total.toFixed(1) + '% — Multiplier: ' + mult.toFixed(3));
+}
+
+// ============================================================
+// EMAIL HELPER
+// ============================================================
+function buildEmail() {
+  if (!_lastResult) return { subj:'WFM Alert — ABIRE OS', body:'Run analysis first to generate a report.' };
+  var r = _lastResult;
+  var subj = '[ABIRE OS] WFM ' + r.status + ' | ' + (r.avgVar>0?'+':'') + r.avgVar.toFixed(1) + '% Avg Variance';
+  var body = 'WFM Intraday Alert — ABIRE OS Forecast Guardian\n\n'
+    + 'Status: ' + r.emoji + ' ' + r.status + '\n'
+    + 'Avg Variance: ' + (r.avgVar>0?'+':'') + r.avgVar.toFixed(1) + '%\n'
+    + 'Volume Variance: ' + (r.totVP>0?'+':'') + r.totVP.toFixed(1) + '%\n'
+    + 'Confidence: ' + r.conf + '%\n'
+    + 'Intervals Analysed: ' + r.data.length + '\n\n'
+    + 'TOP ROOT CAUSES:\n' + r.causes.slice(0,3).map(function(c,i){return (i+1)+'. '+c.text;}).join('\n')
+    + '\n\nRECOMMENDED ACTIONS:\n' + r.actions.slice(0,3).map(function(a,i){return (i+1)+'. '+a;}).join('\n')
+    + '\n\n-- Sent via ABIRE OS WFM Forecast Guardian';
+  return { subj:subj, body:body };
+}
+
+// ============================================================
+// SCHEDULER (localStorage)
+// ============================================================
+function loadSchedules() { try { return JSON.parse(localStorage.getItem('wfm_schedules')||'[]'); } catch(e){ return []; } }
+function saveSchedules(s){ try { localStorage.setItem('wfm_schedules',JSON.stringify(s)); } catch(e){} }
+
+function renderSchedules() {
+  var el = document.getElementById('scheduledList');
+  if (!el) return;
+  var list = loadSchedules();
+  if (list.length === 0) { el.innerHTML = ''; return; }
+  el.innerHTML = list.map(function(s,i){
+    return '<div class="scheduled-item"><span>📧 '+s.email+' · ⏰ '+s.time+' daily</span>'
+      +'<button class="scheduled-remove" onclick="removeSchedule('+i+')">Remove</button></div>';
+  }).join('');
+}
+
+function removeSchedule(i) {
+  var s = loadSchedules(); s.splice(i,1); saveSchedules(s); renderSchedules();
+}
+
+// ============================================================
+// AI COPILOT
+// ============================================================
+var KB = {
+  'erlang':'Erlang C is the core WFM staffing formula. It calculates the probability a call will wait, given arrival rate (λ), average handle time (AHT), and agents (N). P(wait) is the Erlang C value. Our calculator above handles all the math automatically.',
+  'shrinkage':'Shrinkage = time agents are paid but unavailable. Typical range: 25–35%. Staffing multiplier = 1 / (1 − shrinkage%). At 28% shrinkage: 100 Erlang C agents → 139 rostered. Use our Shrinkage Calculator above.',
+  'sla':'Service Level is X% of calls answered within Y seconds (most common: 80/20). SLA is non-linear — 10% understaffing can crash SLA from 85% to 50% due to queuing theory. Use Erlang C to find exact staffing for your target.',
+  'forecast':'WFM forecasting predicts interval-level volumes using historical patterns, day-of-week profiles, and trend analysis. Acceptable interval MAPE: <20%. Track forecast bias by monitoring the % of intervals with positive variance.',
+  'intraday':'Intraday management = real-time queue monitoring + dynamic staffing. Review every 30-min interval, set variance alerts at ±10–15%, build action playbooks. Early detection is everything — acting in interval 1 vs interval 4 of a spike is the difference between minor SLA dip and major incident.',
+  'variance':'Variance % = (Actual − Forecast) / Forecast × 100. Positive = more volume than expected (staffing risk). Acceptable: ±10% per interval. First-interval variance >±20% is a reliable predictor of a challenging day.',
+  'occupancy':'Agent occupancy = handling time / available time × 100. Target: 80–88%. Above 90%: burnout risk and SLA degradation. Below 70%: over-staffing. Erlang C occupancy = Traffic Erlangs / Agent count.',
+  'aht':'AHT = Talk Time + Hold Time + After-Call Work (ACW). Doubling AHT doubles agent requirement. Even a 10-second AHT reduction across a 100-agent team saves ~2.7 FTEs. It is the single highest-leverage operational metric.',
+  'bias':'Forecast bias = systematic over/under-prediction. Diagnose: if >70% of intervals have positive variance → under-forecast. <30% → over-forecast. Fix: apply rolling bias correction factor to your model each week.',
+  'capacity':'Capacity planning = determining headcount needed 3–12 months out. Formula: Monthly Volume × AHT / Working seconds / (1−Shrinkage) / Target Occupancy. Use our Capacity Planner above for multi-month projections.'
+};
+
+function copilotReply(q) {
+  q = q.toLowerCase();
+  for (var k in KB) { if (KB.hasOwnProperty(k) && q.indexOf(k) !== -1) return KB[k]; }
+  if (_lastResult) {
+    if (q.indexOf('status') !== -1 || q.indexOf('current') !== -1)
+      return 'Current: ' + _lastResult.status + ' | Avg variance: ' + _lastResult.avgVar.toFixed(1) + '% | ' + _lastResult.data.length + ' intervals | Confidence: ' + _lastResult.conf + '%';
+    if (q.indexOf('action') !== -1 || q.indexOf('do') !== -1 || q.indexOf('recommend') !== -1)
+      return 'Top action: ' + _lastResult.actions[0];
+  }
+  return 'I can answer questions about Erlang C, shrinkage, SLA, forecast bias, intraday management, AHT, occupancy, capacity planning, and variance analysis. Run an analysis first for context-aware answers.';
+}
+
+function addMsg(text, role) {
+  var msgs = document.getElementById('copilotMessages');
+  if (!msgs) return;
+  var div = document.createElement('div'); div.className = 'copilot-msg ' + role;
+  var bub = document.createElement('div'); bub.className = 'msg-bubble'; bub.textContent = text;
+  div.appendChild(bub); msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendCopilot(text) {
+  if (!text || !text.trim()) return;
+  addMsg(text, 'user');
+  var inp = document.getElementById('copilotInput'); if (inp) inp.value = '';
+  // Typing indicator
+  var msgs = document.getElementById('copilotMessages');
+  var typing = null;
+  if (msgs) {
+    typing = document.createElement('div'); typing.className='copilot-msg bot'; typing.id='typing';
+    typing.innerHTML='<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+    msgs.appendChild(typing); msgs.scrollTop = msgs.scrollHeight;
+  }
+  setTimeout(function(){
+    if (typing) typing.remove();
+    addMsg(copilotReply(text), 'bot');
+  }, 550 + Math.random()*450);
+}
+
+// ============================================================
+// COPY & EXPORT
+// ============================================================
+function copyAnalysis() {
+  if (!_lastResult) { showToast('⚠️ Run analysis first'); return; }
+  var r = _lastResult;
+  var txt = 'ABIRE OS WFM ANALYSIS REPORT\n' + '='.repeat(40) + '\n'
+    + 'Status: ' + r.status + '\nAvg Variance: ' + r.avgVar.toFixed(1) + '%\n'
+    + 'Total Volume Variance: ' + r.totVP.toFixed(1) + '%\nConfidence: ' + r.conf + '%\n\n'
+    + 'ROOT CAUSES:\n' + r.causes.map(function(c,i){return (i+1)+'. '+c.text;}).join('\n')
+    + '\n\nACTIONS:\n' + r.actions.map(function(a,i){return (i+1)+'. '+a;}).join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(function(){ showToast('📋 Copied to clipboard!'); })
+      .catch(function(){ prompt('Copy this:', txt); });
+  } else { prompt('Copy this:', txt); }
+}
+
+function exportAnalysis() {
+  if (!_lastResult) { showToast('⚠️ Run analysis first'); return; }
+  var r = _lastResult;
+  var lines = ['ABIRE OS – WFM Forecast Guardian', '='.repeat(50),
+    'Generated: ' + new Date().toLocaleString(),
+    'Status: ' + r.emoji + ' ' + r.status,
+    'Avg Variance: ' + r.avgVar.toFixed(2) + '%',
+    'Total Volume Variance: ' + r.totVP.toFixed(2) + '%',
+    'Spike Intervals: ' + r.spikes.length,
+    'Dip Intervals: ' + r.dips.length,
+    'AI Confidence: ' + r.conf + '%',
+    '', 'ROOT CAUSES:'].concat(r.causes.map(function(c,i){return (i+1)+'. ['+c.sev.toUpperCase()+'] '+c.text;}))
+    .concat(['','RECOMMENDED ACTIONS:']).concat(r.actions.map(function(a,i){return (i+1)+'. '+a;}));
+  var blob = new Blob([lines.join('\n')], {type:'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'wfm-analysis-' + new Date().toISOString().slice(0,10) + '.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  showToast('💾 Report exported');
+}
+
+// ============================================================
+// DOM READY — BIND ALL BUTTONS + INIT
+// ============================================================
+// ============================================================
+// COPILOT OPEN / CLOSE / TOGGLE — class-based, no hidden attr
+// ============================================================
+function copilotOpen() {
+  var panel = document.getElementById('copilotPanel');
+  var fab   = document.getElementById('copilotFab');
+  if (!panel) { console.error('[ABIRE OS] #copilotPanel not found'); return; }
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
+  if (fab) fab.setAttribute('aria-expanded', 'true');
+  // Focus the input for accessibility
+  setTimeout(function() {
+    var inp = document.getElementById('copilotInput');
+    if (inp) inp.focus();
+  }, 260);
+  console.log('[ABIRE OS] Copilot opened');
+}
+
+function copilotClose() {
+  var panel = document.getElementById('copilotPanel');
+  var fab   = document.getElementById('copilotFab');
+  if (!panel) { console.error('[ABIRE OS] #copilotPanel not found'); return; }
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
+  if (fab) { fab.setAttribute('aria-expanded', 'false'); fab.focus(); }
+  console.log('[ABIRE OS] Copilot closed');
+}
+
+function copilotToggle() {
+  var panel = document.getElementById('copilotPanel');
+  if (!panel) { console.error('[ABIRE OS] #copilotPanel not found'); return; }
+  if (panel.classList.contains('open')) { copilotClose(); } else { copilotOpen(); }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[ABIRE OS] DOM ready — binding all event listeners');
+
+  // --- LIVE CLOCK ---
+  updateLiveClock();
+  setInterval(updateLiveClock, 1000);
+
+  // --- NAV ---
+  var navToggle = document.getElementById('navToggleBtn');
+  var mobileMenu= document.getElementById('mobileMenu');
+  var mobileClose=document.getElementById('mobileClose');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', function(){ mobileMenu.classList.add('open'); navToggle.setAttribute('aria-expanded','true'); });
+  }
+  if (mobileClose && mobileMenu) {
+    mobileClose.addEventListener('click', function(){ mobileMenu.classList.remove('open'); if(navToggle)navToggle.setAttribute('aria-expanded','false'); });
+  }
+  document.querySelectorAll('.mobile-link').forEach(function(l){
+    l.addEventListener('click', function(){ if(mobileMenu)mobileMenu.classList.remove('open'); });
+  });
+
+  // --- FAQ ---
+  document.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var exp = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+      document.querySelectorAll('.faq-a').forEach(function(a){ a.hidden=true; });
+      if (!exp) { btn.setAttribute('aria-expanded','true'); var el=document.getElementById(btn.getAttribute('aria-controls')); if(el)el.hidden=false; }
+    });
+  });
+
+  // ============================================================
+  // BUTTON BINDINGS — all 7 core functions + support buttons
+  // ============================================================
+
+  // 1. RUN ANALYSIS (hero button)
+  var runBtn = document.getElementById('runAnalysisBtn');
+  if (runBtn) runBtn.addEventListener('click', runAnalysis);
+  else console.warn('[ABIRE OS] #runAnalysisBtn not found');
+
+  // 2. ANALYZE NOW (tool panel button)
+  var analyzeBtn = document.getElementById('analyzeBtn');
+  if (analyzeBtn) analyzeBtn.addEventListener('click', runAnalysis);
+  else console.warn('[ABIRE OS] #analyzeBtn not found');
+
+  // 3. LOAD SAMPLE DATA
+  var sampleBtn = document.getElementById('loadSampleBtn');
+  if (sampleBtn) sampleBtn.addEventListener('click', loadSampleData);
+  else console.warn('[ABIRE OS] #loadSampleBtn not found');
+
+  // 4. RANDOM DATASET
+  var randomBtn = document.getElementById('loadRandomBtn');
+  if (randomBtn) randomBtn.addEventListener('click', generateRandom);
+  else console.warn('[ABIRE OS] #loadRandomBtn not found');
+
+  // 5. ERLANG C CALCULATOR
+  var erlBtn = document.getElementById('erlangCalcBtn');
+  if (erlBtn) erlBtn.addEventListener('click', runErlangC);
+  else console.warn('[ABIRE OS] #erlangCalcBtn not found');
+
+  // 6. CAPACITY PLANNER
+  var capBtn = document.getElementById('capacityCalcBtn');
+  if (capBtn) capBtn.addEventListener('click', runCapacityPlanning);
+  else console.warn('[ABIRE OS] #capacityCalcBtn not found');
+
+  // 7. SHRINKAGE CALCULATOR
+  var shrBtn = document.getElementById('shrinkageCalcBtn');
+  if (shrBtn) shrBtn.addEventListener('click', runShrinkage);
+  else console.warn('[ABIRE OS] #shrinkageCalcBtn not found');
+
+  // Copy / Export
+  var copyBtn = document.getElementById('copyBtn');
+  if (copyBtn) copyBtn.addEventListener('click', copyAnalysis);
+
+  var exportBtn = document.getElementById('exportBtn');
+  if (exportBtn) exportBtn.addEventListener('click', exportAnalysis);
+
+  // Gmail
+  var gmailBtn = document.getElementById('gmailBtn');
+  if (gmailBtn) gmailBtn.addEventListener('click', function(){
+    var e = buildEmail();
+    window.open('https://mail.google.com/mail/?view=cm&su='+encodeURIComponent(e.subj)+'&body='+encodeURIComponent(e.body), '_blank');
+  });
+
+  // Outlook
+  var outlookBtn = document.getElementById('outlookBtn');
+  if (outlookBtn) outlookBtn.addEventListener('click', function(){
+    var e = buildEmail();
+    window.open('https://outlook.live.com/mail/deeplink/compose?subject='+encodeURIComponent(e.subj)+'&body='+encodeURIComponent(e.body), '_blank');
+  });
+
+  // Scheduler
+  var schedBtn = document.getElementById('scheduleBtn');
+  if (schedBtn) schedBtn.addEventListener('click', function(){
+    var em = (document.getElementById('reportEmail')||{}).value;
+    var ti = (document.getElementById('reportTime') ||{}).value;
+    if (!em || !ti) { showToast('⚠️ Enter email and time'); return; }
+    var s = loadSchedules(); s.push({email:em,time:ti}); saveSchedules(s); renderSchedules();
+    showToast('✅ Scheduled: ' + em + ' at ' + ti);
+    var st = document.getElementById('schedulerStatus');
+    if (st) st.textContent = '✅ Report scheduled: ' + em + ' at ' + ti + ' daily';
+  });
+
+  var sendNowBtn = document.getElementById('sendNowBtn');
+  if (sendNowBtn) sendNowBtn.addEventListener('click', function(){
+    var em = (document.getElementById('reportEmail')||{}).value;
+    if (!em) { showToast('⚠️ Enter an email address'); return; }
+    var summary = _lastResult ? 'Status: '+_lastResult.status+', Variance: '+_lastResult.avgVar.toFixed(1)+'%' : 'No analysis run yet.';
+    window.open('https://mail.google.com/mail/?view=cm&to='+encodeURIComponent(em)+'&su='+encodeURIComponent('[ABIRE OS] WFM Daily Report')+'&body='+encodeURIComponent('WFM Daily Report — ABIRE OS\n\n'+summary+'\n\nGenerated: '+new Date().toLocaleString()), '_blank');
+    showToast('Opening email client...');
+  });
+
+  // AI Copilot
+  var fab     = document.getElementById('copilotFab');
+  var panel   = document.getElementById('copilotPanel');
+  var cpClose = document.getElementById('copilotClose');
+  var cpInput = document.getElementById('copilotInput');
+  var cpSend  = document.getElementById('copilotSend');
+  if (fab && panel) {
+    fab.addEventListener('click', function(e){ e.stopPropagation(); copilotToggle(); });
+    fab.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); copilotToggle(); } });
+  }
+  if (cpClose) cpClose.addEventListener('click', function(e){ e.stopPropagation(); copilotClose(); });
+  if (cpSend  && cpInput) cpSend.addEventListener('click', function(){ sendCopilot(cpInput.value); });
+  if (cpInput) cpInput.addEventListener('keydown', function(e){ if(e.key==='Enter') sendCopilot(cpInput.value); });
+  document.querySelectorAll('.suggestion-chip').forEach(function(c){
+    c.addEventListener('click', function(e){
+      e.stopPropagation();
+      copilotOpen();
+      sendCopilot(c.getAttribute('data-q'));
+    });
+  });
+
+  // ============================================================
+  // COPILOT: Click-outside-to-close + Escape key
+  // ============================================================
+  var panelEl = document.getElementById('copilotPanel');
+  if (panelEl) {
+    panelEl.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var panel2 = document.getElementById('copilotPanel');
+    var fab2   = document.getElementById('copilotFab');
+    if (!panel2 || !panel2.classList.contains('open')) return;
+    if (fab2 && fab2.contains(e.target)) return;
+    copilotClose();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var panel3 = document.getElementById('copilotPanel');
+      if (panel3 && panel3.classList.contains('open')) { copilotClose(); }
+    }
+  });
+
+  // Resize → redraw chart
+  var resizeTid;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTid);
+    resizeTid = setTimeout(function(){
+      if (_lastResult) renderChartJS(_lastResult.data);
+    }, 220);
+  });
+
+  // Active nav on scroll
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-link');
+  if ('IntersectionObserver' in window && sections.length) {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          navLinks.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href')==='#'+e.target.id); });
+        }
+      });
+    }, { threshold:0.3 });
+    sections.forEach(function(s){ obs.observe(s); });
+  }
+
+  // Init scheduler list
+  renderSchedules();
+
+  console.log('[ABIRE OS] ✅ All ' + document.querySelectorAll('button').length + ' buttons ready. App live.');
+});
+</script>
+</body>
+</html>
